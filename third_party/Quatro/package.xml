@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<package format="3">
+
+  <name>quatro</name>
+  <version>1.0.0</version>
+  <description>quatro</description>
+
+  <maintainer email="eungchang_mason@kaist.ac.kr">Eungchang Mason Lee</maintainer>
+  <maintainer email="shapelim@kaist.ac.kr">Hyungtae Lim</maintainer>
+
+  <license>GPL3</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
