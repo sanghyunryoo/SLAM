@@ -67,7 +67,7 @@ def generate_launch_description():
         executable='fastlio_mapping',
         name='fast_lio',
         parameters=[
-            {'/root/slam_ws/src/FAST-LIO-SAM-SC-QN/third_party/FAST_LIO/config/ouster64.yaml'},
+            {'/root/ros2_ws/src/SLAM/third_party/FAST_LIO/config/ouster64.yaml'},
             {'use_sim_time': use_sim_time}],
         output='screen',
         # remappings=[('/Odometry', '/odom_lio')]  # base_link to base_footprint remapping,
@@ -86,9 +86,9 @@ def generate_launch_description():
         name='fast_lio_sam_sc_qn_node',
         output='screen',
         parameters=[
-            {'/root/slam_ws/src/FAST-LIO-SAM-SC-QN/fast_lio_sam_sc_qn/config/config.yaml'},
-            {'use_sim_time': use_sim_time}
-        ],
+            {'/root/ros2_ws/src/SLAM/fast_lio_sam_sc_qn/config/config.yaml'},
+            {'use_sim_time': use_sim_time},
+        ]
     )
 
     pointcloud_to_grid_node = Node(
@@ -120,7 +120,7 @@ def generate_launch_description():
         
     return LaunchDescription(
         [
-            flamingo_description_node,
+            # flamingo_description_node,
             declare_use_sim_time_cmd,
             # declare_config_path_cmd,
             # decalre_config_file_cmd,
@@ -129,8 +129,8 @@ def generate_launch_description():
             # declare_rviz_cmd,
             # declare_rviz_config_path_cmd,
             # rviz_node,
-            fast_lio_node,  
+            # fast_lio_node,  
             fast_lio_sam_node,
-            pointcloud_to_grid_node
+            # pointcloud_to_grid_node
         ]
     )
