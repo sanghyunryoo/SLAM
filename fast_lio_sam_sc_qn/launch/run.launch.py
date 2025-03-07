@@ -14,9 +14,9 @@ def generate_launch_description():
     rviz_use = LaunchConfiguration('rviz')
     rviz_cfg = LaunchConfiguration('rviz_cfg')
         
-    pkg_path = os.path.join(get_package_share_directory("flamingo_description"))
-    xacro_file = os.path.join(pkg_path, "urdf", "flamingo_rev02.urdf.xacro")
-    robot_description = xacro.process_file(xacro_file)
+    # pkg_path = os.path.join(get_package_share_directory("flamingo_description"))
+    # xacro_file = os.path.join(pkg_path, "urdf", "flamingo_rev02.urdf.xacro")
+    # robot_description = xacro.process_file(xacro_file)
     
     package_path = get_package_share_directory('fast_lio')
     default_config_path = os.path.join(package_path, 'config')
@@ -52,15 +52,15 @@ def generate_launch_description():
         'lidar_topic', default_value='/cloud_registered', description='LiDAR topic name'
     )
         
-    flamingo_description_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        output="screen",
-        parameters=[
-            {"robot_description": robot_description.toxml()},
-            {"use_sim_time": use_sim_time}
-        ],
-    )
+    # flamingo_description_node = Node(
+    #     package="robot_state_publisher",
+    #     executable="robot_state_publisher",
+    #     output="screen",
+    #     parameters=[
+    #         {"robot_description": robot_description.toxml()},
+    #         {"use_sim_time": use_sim_time}
+    #     ],
+    # )
     
     fast_lio_node = Node(
         package='fast_lio',
@@ -97,31 +97,24 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {'cloud_in_topic': "/corrected_current_pcd"},
-            {'position_x': 0.0},
-            {'position_y': 0.0},
-            {'intensity_factor': 10.0},
-            {'height_factor': 10.0},
-            {'verbose1': False},
-            {'verbose2': False},
-            {'cell_size': 0.05},
-            {'length_x': 20.0},
-            {'length_y': 30.0},
-            #{'frame_out': 'os1_sensor'},
-            {'mapi_topic_name': 'intensity_grid'},
-            {'maph_topic_name': 'height_grid'},
+            {'map_topic': "/map"},
+
+            {'resolution': 0.05},
+            {'local_width': 30.0},
+            {'local_height': 30.0},
+
             {'use_sim_time': True},
             {'filter_min_z': -2.0},
-            {'filter_max_z': 5.0},
-            {'occupied_threshold': 0.5},
+            {'filter_max_z': 2.0},
+            {'occupied_threshold': 1.0},
             {'use_sim_time': use_sim_time},
         ],
-        remappings=[('/height_grid', '/map')]
     )
         
     return LaunchDescription(
-        [
+        [   
             # flamingo_description_node,
-            declare_use_sim_time_cmd,
+            # declare_use_sim_time_cmd,
             # declare_config_path_cmd,
             # decalre_config_file_cmd,
             # declare_odom_topic_arg,
@@ -129,8 +122,8 @@ def generate_launch_description():
             # declare_rviz_cmd,
             # declare_rviz_config_path_cmd,
             # rviz_node,
-            # fast_lio_node,  
+            fast_lio_node,  
             fast_lio_sam_node,
-            # pointcloud_to_grid_node
+            pointcloud_to_grid_node
         ]
     )
